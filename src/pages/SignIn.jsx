@@ -45,6 +45,7 @@ export const SignIn = () => {
                 className='passwordInput'
                 placeholder='Password'
                 id='password'
+                value={password}
                 onChange={onChangeHandler}
               />
               <img
