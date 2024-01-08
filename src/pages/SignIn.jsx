@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import { Link, useNavigate } from "react-router-dom";
 
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
@@ -23,6 +26,25 @@ export const SignIn = () => {
     }));
   };
 
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      if (userCredentials.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className='pageContainer'>
@@ -30,7 +52,7 @@ export const SignIn = () => {
           <p className='pageHeader'>Welcome Back!</p>
         </header>
         <main>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <input
               className='emailInput'
               type='text'
