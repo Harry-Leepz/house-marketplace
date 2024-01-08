@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebase.config";
 
@@ -48,6 +50,12 @@ export const SignUp = () => {
       updateProfile(auth.currentUser, {
         displayName: name,
       });
+
+      // create copy of form data, delete password and create a user document in firestore db
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timeStamp = serverTimestamp();
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
 
       navigate("/");
     } catch (error) {
