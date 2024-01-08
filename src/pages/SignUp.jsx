@@ -44,9 +44,7 @@ export const SignUp = () => {
         email,
         password
       );
-
       const user = userCredentials.user;
-
       updateProfile(auth.currentUser, {
         displayName: name,
       });
