@@ -1,5 +1,12 @@
 import { useState } from "react";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { db } from "../firebase.config";
 
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
@@ -24,6 +31,30 @@ export const SignUp = () => {
     }));
   };
 
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      // firebase authentication to create a new user
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredentials.user;
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className='pageContainer'>
@@ -31,7 +62,7 @@ export const SignUp = () => {
           <p className='pageHeader'>Welcome Back!</p>
         </header>
         <main>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <input
               className='nameInput'
               type='text'
