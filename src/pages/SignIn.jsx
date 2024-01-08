@@ -36,7 +36,6 @@ export const SignIn = () => {
         email,
         password
       );
-
       if (userCredentials.user) {
         navigate("/");
       }
