@@ -18,7 +18,6 @@ export const Profile = () => {
 
   const onClickHandler = () => {
     auth.signOut();
-    toast.info("Logged Out Successfully!!!");
     navigate("/");
   };
 
