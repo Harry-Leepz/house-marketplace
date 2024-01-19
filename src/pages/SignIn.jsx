@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import { GoogleOAuth } from "../components/GoogleOAuth";
 
 export const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -91,7 +92,7 @@ export const SignIn = () => {
             </div>
           </form>
 
-          {/* Google O Auth */}
+          <GoogleOAuth />
 
           <Link to='/sign-up' className='registerLink'>
             Sign Up Instead
