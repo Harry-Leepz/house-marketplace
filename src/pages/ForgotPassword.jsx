@@ -5,8 +5,6 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 
-import React from "react";
-
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
@@ -14,7 +12,6 @@ export const ForgotPassword = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
