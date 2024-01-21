@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import { ListingItem } from "../components/ListingItem";
+
 import {
   collection,
   getDocs,
@@ -70,9 +72,9 @@ export const Category = () => {
         <>
           <main>
             <ul className='categoryListings'>
-              {listings.map((listing) => {
-                return <h3 key={listing.id}>{listing.data.name}</h3>;
-              })}
+              {listings.map((listing) => (
+                <ListingItem key={listing.id} data={listing.data} />
+              ))}
             </ul>
           </main>
         </>
