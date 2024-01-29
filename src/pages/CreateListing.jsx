@@ -23,6 +23,22 @@ export const CreateListing = () => {
     longitude: 0,
   });
 
+  const {
+    type,
+    name,
+    bedrooms,
+    bathrooms,
+    parking,
+    furnished,
+    address,
+    offer,
+    regularPrice,
+    discountedPrice,
+    images,
+    latitude,
+    longitude,
+  } = formData;
+
   const auth = getAuth();
   const navigate = useNavigate();
   const isMounted = useRef(true);
@@ -45,9 +61,21 @@ export const CreateListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
+  const onSubmitHandler = () => {};
+
   if (loading) {
     return <Loading />;
   }
 
-  return <div>CreateListing</div>;
+  return (
+    <div className='profile'>
+      <header>
+        <p className='pageHeader'>Create A Listing</p>
+      </header>
+
+      <main>
+        <form onSubmit={onSubmitHandler}></form>
+      </main>
+    </div>
+  );
 };
