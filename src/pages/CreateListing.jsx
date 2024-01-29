@@ -61,7 +61,11 @@ export const CreateListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
-  const onSubmitHandler = () => {};
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+  };
+
+  const onMutateHandler = () => {};
 
   if (loading) {
     return <Loading />;
@@ -74,7 +78,100 @@ export const CreateListing = () => {
       </header>
 
       <main>
-        <form onSubmit={onSubmitHandler}></form>
+        <form onSubmit={onSubmitHandler}>
+          {/* Sell / Rent */}
+          <label className='formLabel'>Sell / Rent</label>
+          <div className='formButtons'>
+            <button
+              type='button'
+              className={type === "sale" ? "formButtonActive" : "formButton"}
+              value='sale'
+              id='type'
+              onClick={onMutateHandler}
+            >
+              Sell
+            </button>
+            <button
+              type='button'
+              className={type === "rent" ? "formButtonActive" : "formButton"}
+              value='rent'
+              id='type'
+              onClick={onMutateHandler}
+            >
+              Rent
+            </button>
+          </div>
+
+          {/* Name */}
+          <label className='formLabel'>Name</label>
+          <input
+            className='formInputName'
+            type='text'
+            id='name'
+            value={name}
+            onChange={onMutateHandler}
+            maxLength='32'
+            minLength='10'
+            required
+          />
+
+          {/* Bedrooms and Bathrooms */}
+          <div className='formRooms flex'>
+            <div>
+              <label className='formLabel'>Bedrooms</label>
+              <input
+                className='formInputSmall'
+                type='number'
+                id='bedrooms'
+                value={bedrooms}
+                onChange={onMutateHandler}
+                min='1'
+                max='50'
+                required
+              />
+            </div>
+            <div>
+              <label className='formLabel'>Bathrooms</label>
+              <input
+                className='formInputSmall'
+                type='number'
+                id='bathrooms'
+                value={bathrooms}
+                onChange={onMutateHandler}
+                min='1'
+                max='50'
+                required
+              />
+            </div>
+          </div>
+
+          {/* Parking  */}
+          <label className='formLabel'>Parking spot</label>
+          <div className='formButtons'>
+            <button
+              className={parking ? "formButtonActive" : "formButton"}
+              type='button'
+              id='parking'
+              value={true}
+              onClick={onMutateHandler}
+              min='1'
+              max='50'
+            >
+              Yes
+            </button>
+            <button
+              className={
+                !parking && parking !== null ? "formButtonActive" : "formButton"
+              }
+              type='button'
+              id='parking'
+              value={false}
+              onClick={onMutateHandler}
+            >
+              No
+            </button>
+          </div>
+        </form>
       </main>
     </div>
   );
