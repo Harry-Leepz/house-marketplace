@@ -63,9 +63,36 @@ export const CreateListing = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    console.log(formData);
   };
 
-  const onMutateHandler = () => {};
+  const onMutateHandler = (event) => {
+    let boolean = null;
+
+    // event check for button input in form
+    if (event.target.value === "true") {
+      boolean = true;
+    }
+    if (event.target.value === "false") {
+      boolean = false;
+    }
+
+    // event check for file upload
+    if (event.target.files) {
+      setFormData((previousState) => ({
+        ...previousState,
+        images: event.target.files,
+      }));
+    }
+
+    // event check for text/boolean/numbers inputs in form
+    if (!event.target.files) {
+      setFormData((previousState) => ({
+        ...previousState,
+        [event.target.id]: boolean ?? event.target.value,
+      }));
+    }
+  };
 
   if (loading) {
     return <Loading />;
