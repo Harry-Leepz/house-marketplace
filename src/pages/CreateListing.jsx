@@ -6,6 +6,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 
 import { v4 as uuidv4 } from "uuid";
@@ -156,7 +157,7 @@ export const CreateListing = () => {
       });
     };
 
-    const imgUrls = await Promise.all(
+    const imageUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
     ).catch(() => {
       setLoading(false);
@@ -164,9 +165,27 @@ export const CreateListing = () => {
       return;
     });
 
-    console.log(imgUrls);
+    console.log(imageUrls);
+
+    // Upload the document to the FIrebase/Firestore database
+    // Create a document object wth all data
+    const formDataCopy = {
+      ...formData,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+    // Modify the object to remove redundant properties
+    formDataCopy.location = address;
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+    // Upload document to Firebase/Firestore
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
 
     setLoading(false);
+    toast.success("Listing saved");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   const onMutateHandler = (event) => {
